@@ -96,7 +96,7 @@ export default function Page1(){
             <Flex width={"30vw"} justifyContent={"center"} alignItems={"center"} direction={"column"}>
                 
                 <Box marginBottom={"50px"}>
-                    <img src="public/rocket.svg" width={"70px"}></img>
+                    <img src="/rocket.svg" width={"70px"}></img>
                 </Box>
 
                 <Box>
