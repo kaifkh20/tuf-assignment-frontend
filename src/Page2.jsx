@@ -1,6 +1,8 @@
 import { Flex, Table, TableContainer, Th,Tr, Thead, Tbody, Td,Heading,Box, Spinner, Text, Alert, AlertDescription,AlertTitle,AlertIcon} from "@chakra-ui/react";
 import { useEffect,useState } from "react";
 
+const backEndApi = "https://tuf-assignment-backend-at6z.onrender.com"
+
 export default function Page2(){
     
   const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +12,7 @@ export default function Page2(){
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/data');
+        const response = await fetch(`${backEndApi}/data`);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }

@@ -2,6 +2,7 @@ import { useState,createElement } from "react";
 import { Box, Flex, Text, Textarea,Select,Accordion,AccordionButton,AccordionPanel,AccordionItem,AccordionIcon,Alert,AlertTitle,AlertIcon,AlertDescription, Input, Button } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 
+const backEndApi = "https://tuf-assignment-backend-at6z.onrender.com"
 
 async function handleSubmit(e){
     e.preventDefault()
@@ -15,7 +16,7 @@ async function handleSubmit(e){
     }
 
 
-    const response = await fetch('http://localhost:3000/form',{
+    const response = await fetch(`${backEndApi}/form`,{
         method : "post",
         headers : {'Content-type' : "application/json"},
         body : JSON.stringify(data)
