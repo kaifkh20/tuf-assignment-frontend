@@ -1,8 +1,32 @@
 import { useState,createElement } from "react";
-import { Box, Flex, Text, Textarea,Select,Accordion,AccordionButton,AccordionPanel,AccordionItem,AccordionIcon, Input, Button } from "@chakra-ui/react";
-import { redirect } from "react-router-dom";
+import { Box, Flex, Text, Textarea,Select,Accordion,AccordionButton,AccordionPanel,AccordionItem,AccordionIcon,Alert,AlertTitle,AlertIcon,AlertDescription, Input, Button } from "@chakra-ui/react";
+import { Navigate } from "react-router-dom";
 
 
+async function handleSubmit(e){
+    e.preventDefault()
+    const form = new FormData(e.target)
+
+    const data = {
+        username : form.get("username"),
+        language : form.get("language"),
+        stdinput : form.get("stdinput"),
+        sourceCode : form.get("sourcecode")
+    }
+
+
+    const response = await fetch('http://localhost:3000/form',{
+        method : "post",
+        headers : {'Content-type' : "application/json"},
+        body : JSON.stringify(data)
+    })
+
+    
+    if(!response.ok){
+        return new Error("There was some error") 
+    }
+
+}
 
 export default function Page1(){
 
@@ -10,43 +34,60 @@ export default function Page1(){
 
     const [numberChild,setNumberChild] = useState([createElement("span",null,lineCount)])
 
-    // numberChild.push()
+    const [error,setError] = useState(false)
 
-    // console.log(numberChild);
+    const [success,setSuccess] = useState(null)
 
-    async function handleSubmit(e){
-        e.preventDefault()
-        const form = new FormData(e.target)
-
-        
-
-        const data = {
-            username : form.get("username"),
-            language : form.get("language"),
-            stdinput : form.get("stdinput"),
-            sourceCode : form.get("sourcecode")
-        }
-        console.log(data);
-
-
-        const response = await fetch('http://localhost:3000/form',{
-            method : "post",
-            headers : {'Content-type' : "application/json"},
-            body : JSON.stringify(data)
-        })
-
-        
-        if(response.ok){
-            return redirect('/page2')
-            console.log("success");
-        }else console.log("error")
-        // const formData = new FormData(e.target)
-        // console.log(formData);
+    if(success===true){
+        return <Navigate to={"/page2"}></Navigate>
     }
+
+//     if(error){
+//         return (
+            
+//     )
+//   }
+    
 
     return (
 
-        <form method="post" onSubmit={handleSubmit}>
+        <>
+        
+        <Alert
+                status='error'
+                variant='subtle'
+                flexDirection='column'
+                alignItems='center'
+                justifyContent='center'
+                textAlign='center'
+                height='100vh'
+                display={error ? "flex" : "none"}
+                zIndex={"100"}
+            >
+                <AlertIcon boxSize='40px' mr={0} />
+                <AlertTitle mt={4} mb={1} fontSize='lg'>
+                Error
+                </AlertTitle>
+                <AlertDescription as={"em"} maxWidth='sm'>
+                    There was an error processing your request :-(
+                </AlertDescription>
+                <Text fontSize={"xs"}>
+                    Wait for 2 seconds..
+                </Text>
+            </Alert>
+
+        <form method="post" onSubmit={async(e)=>{
+            try{
+                await handleSubmit(e)
+                setSuccess(true)
+            }catch(e){
+                setError(true)
+                setSuccess(null)
+                setTimeout(()=>{
+                    setError(false)
+                },1500)
+            }
+        }}>
 
         <Flex justifyContent={"space-between"} height="100vh" >
 
@@ -94,11 +135,11 @@ export default function Page1(){
                 <Flex direction={"column"} width={"100%"} >
                     
                 <Flex  justifyContent={"center"} alignItems={"center"} margin={"0"} padding={"0"} marginBottom={"1rem"}>
-                    <Select width={"30%"} placeholder="Select Your Language" name="language" size={'sm'}>
-                        <option value='cpp'>C++</option>
-                        <option value='java'>Java</option>
-                        <option value='javascript'>Javascript</option>
-                        <option value='python'>Python</option>
+                    <Select width={"30%"} placeholder="Select Your Language" defaultValue={'cpp'} name="language" size={'sm'}>
+                        <option value='C++'>C++</option>
+                        <option value='Java'>Java</option>
+                        <option value='JavaScript'>Javascript</option>
+                        <option value='Python'>Python</option>
                     </Select>
                 </Flex>
 
@@ -116,6 +157,7 @@ export default function Page1(){
 
                             
                             e.preventDefault()
+
                             var start = e.target.selectionStart;
                             var end = e.target.selectionEnd;
 
@@ -134,17 +176,6 @@ export default function Page1(){
                         }
                     
                     }}
-                        onPaste={(e)=>{
-                            e.preventDefault()
-                            const text = e.clipboardData.getData("text/plain") 
-                            // const nol = text.split(/\r\n|\r|\n/).length
-
-                            // event.isTrusted = true
-                            const lines = text.split("\n")
-                            for(const line of lines){
-                                e.target.value = e.target.value + line
-                            }
-                        }}
                         >
 
                     </Textarea>
@@ -159,20 +190,6 @@ export default function Page1(){
         </Flex>
         
         </form>
-       
+       </>
     )
 }
-
-// <form method="post" onSubmit={handleSubmit}>
-// <input name="username" type="text" placeholder="Username"/>
-// <select name="language">
-//     <option value="cpp">C++</option>
-//     <option value="java">Java</option>
-//     <option value="javascript">Javascript</option>
-//     <option value="python">Python</option>
-// </select>
-// {/* <input name="stdinput" type="text" placeholder="Standard Input"/> */}
-// <textarea name="stdinput" id="" cols="10" rows="10" placeholder="Standard Input"></textarea>
-// <textarea name="sourcecode" id="" cols="30" rows="10"></textarea>
-// <button type="submit">Run</button>
-// </form>

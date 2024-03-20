@@ -1,10 +1,10 @@
-import { Flex, Table, TableContainer, Th,Tr, Thead, Tbody, Td,Heading,Box } from "@chakra-ui/react";
+import { Flex, Table, TableContainer, Th,Tr, Thead, Tbody, Td,Heading,Box, Spinner, Text, Alert, AlertDescription,AlertTitle,AlertIcon} from "@chakra-ui/react";
 import { useEffect,useState } from "react";
 
 export default function Page2(){
     
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -26,29 +26,40 @@ export default function Page2(){
     fetchData();
   }, []);
 
-  if (isLoading) return 'Loading...';
+  if (isLoading){
+    return (
+      <Flex width={"100vw"} height={"100vh"} direction={"column"} justifyContent={"center"} alignItems={"center"} >
+        <Spinner size={"xl"}/>
+        <Text fontSize={"3xl"}>Loading...</Text>
+      </Flex>
+    )
+  } ;
 
-  if (error) return 'An error has occurred: ' + error;
+  
 
-  console.log(data);
+  if (error){
+    return (
+      <Alert
+        status='error'
+        variant='subtle'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+        textAlign='center'
+        height='100vh'
+      >
+        <AlertIcon boxSize='40px' mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize='lg'>
+          Error
+        </AlertTitle>
+        <AlertDescription maxWidth='sm'>
+          There was an error processing your request :-(
+        </AlertDescription>
+      </Alert>
+    )
+  }
 
-//   const usernameList = data.map(({id,username,codeLanguage,stdInput,timeStamp})=>{
-//     <ul>
-//         <h3>{id}</h3>
-//         <li>
-//         {username}
-//         </li>
-//         <li>
-//         {codeLanguage}
-//     </li>
-//     <li>
-//         {stdInput}
-//     </li>
-//     <li>
-//         {timeStamp}
-//     </li>
-//     </ul>
-//   })
+  // console.log(data);
 
 
   return (
@@ -59,8 +70,8 @@ export default function Page2(){
         </Box>
 
         <Box overflowX={"scroll"}>
-        <TableContainer marginTop={"1rem"}>
-          <Table fontSize={"14px"} padding={"10px"} size={"md"}>
+        <TableContainer marginTop={"1rem"} padding={"10px"} >
+          <Table fontSize={"14px"} size={"md"} variant={"striped"}>
             <Thead>
               <Tr>
                 <Th>
@@ -107,17 +118,3 @@ export default function Page2(){
       </Flex>
   );
 }
-
-// {data.map(({id,username,codeLanguage,stdInput,submissionTimeStamp,sourceCode,submissionOutput})=>{
-//   return (
-//       <div key={id}>
-//       <p>{username}</p>
-//       <p>{codeLanguage}</p>
-//       <p>{stdInput}</p>
-//       <p>{sourceCode.substr(0,100)}</p>
-//       <p>{submissionOutput}</p>
-//       <p>{submissionTimeStamp}</p>
-//       </div>
-//   )
-// })
-// }
