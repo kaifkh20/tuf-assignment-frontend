@@ -69,7 +69,7 @@ export default function Page2(){
           <Heading m={4}>Submissions.</Heading>
         </Box>
 
-        <Box overflowX={"scroll"}>
+        <Box overflowX={"none"} overflowY={"scroll"}>
         <TableContainer marginTop={"1rem"} padding={"10px"} >
           <Table fontSize={"14px"} size={"md"} variant={"striped"}>
             <Thead>
