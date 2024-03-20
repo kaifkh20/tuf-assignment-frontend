@@ -1,5 +1,5 @@
 import { useState,createElement } from "react";
-import { Box, Flex, Text, Textarea,Select,Accordion,AccordionButton,AccordionPanel,AccordionItem,AccordionIcon,Alert,AlertTitle,AlertIcon,AlertDescription, Input, Button } from "@chakra-ui/react";
+import { Box, Flex,Link, Text, Textarea,Select,Accordion,AccordionButton,AccordionPanel,AccordionItem,AccordionIcon,Alert,AlertTitle,AlertIcon,AlertDescription, Input, Button } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 
 const backEndApi = "https://tuf-assignment-backend-at6z.onrender.com"
@@ -95,8 +95,14 @@ export default function Page1(){
             
             <Flex width={"30vw"} justifyContent={"center"} alignItems={"center"} direction={"column"}>
                 
+                <Box position={"fixed"} top={"10"}>
+                <Button>
+                    <Link href="/page2">Show Submissions</Link>
+                </Button>
+                </Box>
+
                 <Box marginBottom={"50px"}>
-                    <img src="/rocket.svg" width={"70px"}></img>
+                    <img src="images/rocket.svg" width={"70px"}></img>
                 </Box>
 
                 <Box>
