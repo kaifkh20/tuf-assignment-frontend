@@ -35,7 +35,7 @@ export default function Page2(){
         <Text fontSize={"3xl"}>Loading...</Text>
       </Flex>
     )
-  } ;
+  } 
 
   
 
