@@ -26,7 +26,6 @@ async function handleSubmit(e){
     if(!response.ok){
         return new Error("There was some error") 
     }
-
 }
 
 export default function Page1(){
@@ -35,12 +34,25 @@ export default function Page1(){
 
     const [numberChild,setNumberChild] = useState([createElement("span",null,lineCount)])
 
-    const [error,setError] = useState(false)
+    const [error,setError] = useState(null)
 
     const [success,setSuccess] = useState(null)
 
+    const [successAlert,setSuccessAlert] = useState(null)
+
+    if(successAlert===true){
+        return(
+            <Alert status='success'>
+            <AlertIcon />
+                Successfully Submitted, redirecting to Submission Page....
+            </Alert>
+        )
+    }
+
     if(success===true){
-        return <Navigate to={"/page2"}></Navigate>
+        return (<>         
+            <Navigate to={"/page2"}></Navigate>
+        </>)
     }
 
 //     if(error){
@@ -80,12 +92,16 @@ export default function Page1(){
         <form method="post" onSubmit={async(e)=>{
             try{
                 await handleSubmit(e)
-                setSuccess(true)
+                setSuccessAlert(true)
+                setTimeout(()=>{
+                    setSuccessAlert(false)
+                    setSuccess(true)
+                },1500)
             }catch(e){
                 setError(true)
                 setSuccess(null)
                 setTimeout(()=>{
-                    setError(false)
+                    setError(null)
                 },1500)
             }
         }}>

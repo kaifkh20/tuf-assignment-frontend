@@ -1,4 +1,4 @@
-import { Flex, Table, TableContainer, Th,Tr, Thead, Tbody, Td,Heading,Box, Spinner, Text, Alert, AlertDescription,AlertTitle,AlertIcon} from "@chakra-ui/react";
+import { Button,Flex, Table, TableContainer, Th,Tr, Thead, Tbody, Td,Heading,Box, Spinner, Text, Alert, AlertDescription,AlertTitle,Link,AlertIcon} from "@chakra-ui/react";
 import { useEffect,useState } from "react";
 
 const backEndApi = "https://tuf-assignment-backend-at6z.onrender.com"
@@ -67,9 +67,10 @@ export default function Page2(){
   return (
       <Flex direction={"column"}>
 
-        <Box padding={"1rem"} backgroundColor={"#282a3a"} color={"#fff"}>
+        <Flex alignItems={"center"} justifyContent={"space-between"} padding={"1rem"} backgroundColor={"#282a3a"} color={"#fff"}>
           <Heading m={4}>Submissions.</Heading>
-        </Box>
+          <Button size={"sm"}><Link href="/">Go to Editor</Link></Button>
+        </Flex>
 
         <Box overflowX={"none"} overflowY={"scroll"}>
         <TableContainer marginTop={"1rem"} padding={"10px"} >
