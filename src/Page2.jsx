@@ -9,6 +9,9 @@ export default function Page2(){
   const [error, setError] = useState(false);
   const [data, setData] = useState(null);
 
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +24,7 @@ export default function Page2(){
       } catch (error) {
         setError(error.message);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     };
 
@@ -118,6 +121,8 @@ export default function Page2(){
           </Table>
         </TableContainer>
         </Box>
+        <Text fontSize={"sm"}>Note : Kindly Referesh to see the output</Text>
       </Flex>
+      
   );
 }
