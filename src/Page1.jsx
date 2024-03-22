@@ -142,7 +142,7 @@ export default function Page1(){
                 <Flex direction={"column"} width={"100%"} >
                     
                 <Flex  justifyContent={"center"} alignItems={"center"} margin={"0"} padding={"0"} marginBottom={"1rem"}>
-                    <Select required={true} width={"30%"} placeholder="Select Your Language" defaultValue={'cpp'} name="language" size={'sm'}>
+                    <Select backgroundColor={"#fff"} color={"#000"} required={true} width={"30%"} placeholder="Select Your Language" defaultValue={'cpp'} name="language" size={'sm'}>
                         <option value='C++'>C++</option>
                         <option value='Java'>Java</option>
                         <option value='JavaScript'>Javascript</option>
